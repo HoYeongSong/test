@@ -2,7 +2,13 @@
 
 import React from "react";
 import { Image, SafeAreaView } from "react-native";
-import { AppLoading, Asset, Font } from "expo";
+import {
+  AppLoading,
+  Asset,
+  Font,
+  AdMobInterstitial,
+  AdMobRewarded
+} from "expo";
 import { Provider } from "react-redux";
 import { createStore, compose, applyMiddleware } from "redux";
 import { persistStore } from "redux-persist";
@@ -46,24 +52,7 @@ AdMobRewarded.setAdUnitID(REWARDED_ID);
 AdMobRewarded.setTestDeviceID("EMULATOR");
 console.disableYellowBox = true;
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      appIsReady: false
-    };
-  }
-
-  async loadAssets() {
-    const imageAssets = cacheImages([Images.logo]);
-
-    const fontAssets = cacheFonts([
-      { OpenSans: require("@assets/fonts/OpenSans-Regular.ttf") },
-      { Volkhov: require("@assets/fonts/Volkhov-Regular.ttf") }
-    ]);
-    await Promise.all([...fontAssets, ...imageAssets]);
-  }
-
+export class Ad extends React.Component {
   _openInterstitial = async () => {
     await AdMobInterstitial.requestAdAsync();
     await AdMobInterstitial.showAdAsync();
@@ -76,6 +65,27 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this._openInterstitial();
+  }
+}
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { appIsReady: false };
+  }
+
+  async loadAssets() {
+    const imageAssets = cacheImages([Images.logo]);
+
+    const fontAssets = cacheFonts([
+      {
+        OpenSans: require("@assets/fonts/OpenSans-Regular.ttf")
+      },
+      {
+        Volkhov: require("@assets/fonts/Volkhov-Regular.ttf")
+      }
+    ]);
+    await Promise.all([...fontAssets, ...imageAssets]);
   }
 
   render() {
