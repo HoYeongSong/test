@@ -1,0 +1,56 @@
+package kr.coincode.mobileapp;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+"title",
+"better_featured_image"
+})
+public class Example {
+
+@JsonProperty("title")
+private Title title;
+@JsonProperty("better_featured_image")
+private BetterFeaturedImage betterFeaturedImage;
+@JsonIgnore
+private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+@JsonProperty("title")
+public Title getTitle() {
+return title;
+}
+
+@JsonProperty("title")
+public void setTitle(Title title) {
+this.title = title;
+}
+
+@JsonProperty("better_featured_image")
+public BetterFeaturedImage getBetterFeaturedImage() {
+return betterFeaturedImage;
+}
+
+@JsonProperty("better_featured_image")
+public void setBetterFeaturedImage(BetterFeaturedImage betterFeaturedImage) {
+this.betterFeaturedImage = betterFeaturedImage;
+}
+
+@JsonAnyGetter
+public Map<String, Object> getAdditionalProperties() {
+return this.additionalProperties;
+}
+
+@JsonAnySetter
+public void setAdditionalProperty(String name, Object value) {
+this.additionalProperties.put(name, value);
+}
+
+}
